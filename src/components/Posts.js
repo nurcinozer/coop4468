@@ -16,7 +16,7 @@ const Posts = (props) => {
     getPosts();
   }, []);
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ display: "flex", backgroundColor: "#fff", height: "100%" }}>
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (

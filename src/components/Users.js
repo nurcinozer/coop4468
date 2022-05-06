@@ -16,7 +16,7 @@ const Users = (props) => {
     getUsers();
   }, []);
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ display: "flex", backgroundColor: "#fff", height: "100%" }}>
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (

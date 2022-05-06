@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 const PostScreen = (props) => {
   const id = props.route.params.id;
   const [isLoading, setLoading] = useState(false);
@@ -20,15 +20,13 @@ const PostScreen = (props) => {
     getPost();
   }, []);
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View style={{ backgroundColor: "#fff", height: "100%" }}>
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
-        <View>
-          <Text style={{ alignItems: "center", fontSize: 25 }}>
-            {post.title}
-          </Text>
-          <Text>Body: {post.body}</Text>
+        <View style={styles.viewStyle}>
+          <Text style={styles.textLG}>{post.title}</Text>
+          <Text style={styles.textSM}>Body: {post.body}</Text>
         </View>
       )}
     </View>
@@ -37,4 +35,28 @@ const PostScreen = (props) => {
 PostScreen.navigationOptions = {
   title: "Post Details",
 };
+const styles = StyleSheet.create({
+  viewStyle: {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#FAFAFD",
+    margin: 10,
+    padding: 20,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  textLG: {
+    alignItems: "center",
+    fontSize: 25,
+    color: "#3D316F",
+    fontWeight: "bold",
+    paddingBottom: 10,
+  },
+  textSM: {
+    fontSize: 16,
+    color: "#3D316F",
+    fontWeight: "200",
+    paddingBottom: 10,
+  },
+});
 export default PostScreen;

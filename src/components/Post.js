@@ -3,7 +3,19 @@ import { Text, ScrollView } from "react-native";
 const Post = (props) => {
   return (
     <ScrollView>
-      <Text style={{ padding: 10 }}>{props.post.title}</Text>
+      <Text
+        style={{
+          backgroundColor: "#E0F3F4",
+          margin: 10,
+          padding: 20,
+          borderRadius: 10,
+          overflow: "hidden",
+          color: "#4A9797",
+          fontWeight: "bold",
+        }}
+      >
+        {props.post.title}
+      </Text>
     </ScrollView>
   );
 };
