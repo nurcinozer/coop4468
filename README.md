@@ -1,6 +1,6 @@
 # COOP4468 - Cross Platform Application Development Project
 
-Nurçin Özer - 1730268
+Nurçin Özer - 1730286
 
 ## Project Detail
 
