@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import User from "./User";
-const Users = (props) => {
+import Post from "./Post";
+const Posts = (props) => {
   const [isLoading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
-  getUsers = () => {
-    fetch("https://jsonplaceholder.typicode.com/users/")
+  const [posts, setPosts] = useState([]);
+  getPosts = () => {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=20/")
       .then((response) => response.json())
-      .then((json) => setUsers(json))
+      .then((json) => setPosts(json))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
   useEffect(() => {
     setLoading(true);
-    getUsers();
+    getPosts();
   }, []);
   return (
     <View style={{ padding: 20 }}>
@@ -21,18 +21,18 @@ const Users = (props) => {
         <Text>Loading...</Text>
       ) : (
         <FlatList
-          data={users}
+          data={posts}
           keyExtractor={({ id }) => id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                props.navigation.navigate("User Detail", {
+                props.navigation.navigate("Post Detail", {
                   id: item.id,
                 })
               }
             >
               <View>
-                <User user={item} />
+                <Post post={item} />
               </View>
             </TouchableOpacity>
           )}
@@ -41,4 +41,4 @@ const Users = (props) => {
     </View>
   );
 };
-export default Users;
+export default Posts;

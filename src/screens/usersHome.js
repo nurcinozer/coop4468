@@ -1,10 +1,9 @@
 import React from "react";
-import { Text, View } from "react-native";
 import Users from "../components/Users";
-const HomeScreen = (props) => {
+const UsersHomeScreen = (props) => {
   return <Users navigation={props.navigation} />;
 };
-HomeScreen.navigationOptions = {
+UsersHomeScreen.navigationOptions = {
   title: "User List",
 };
-export default HomeScreen;
+export default UsersHomeScreen;
