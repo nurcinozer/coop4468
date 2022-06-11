@@ -1,33 +1,33 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, FlatList, SafeAreaView, ScrollView } from "react-native";
-const PostScreen = (props) => {
+const AlbumScreen = (props) => {
   const id = props.route.params.id;
   const [isLoading, setLoading] = useState(false);
-  const [post, setPost] = useState([]);
-  const [comments, setComments] = useState([]);
-  getPost = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + id)
+  const [album, setAlbum] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  getAlbum = () => {
+    fetch("https://jsonplaceholder.typicode.com/albums/" + id)
       .then((response) => response.json())
       .then((json) => {
-        setPost(json);
+        setAlbum(json);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
-  getComments = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
+  getPhotos = () => {
+    fetch("https://jsonplaceholder.typicode.com/albums/" + id + "/photos")
       .then((response) => response.json())
       .then((json) => {
-        setComments(json);
+        setPhotos(json);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
   useEffect(() => {
     setLoading(true);
-    getPost();
-    getComments();
+    getAlbum();
+    getPhotos();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -37,19 +37,14 @@ const PostScreen = (props) => {
       ) : (
         <>
           <View style={styles.viewStyle}>
-            <Text style={styles.textLG}>{post.title}</Text>
-            <Text style={styles.textSM}>Body: {post.body}</Text>
+            <Text style={styles.textLG}>{album.title}</Text>
           </View>
           <View style={styles.viewStyle2}>
-            <Text style={styles.textLG}>Comments</Text>
-            {comments.map((comment, index) => (
+            <Text style={styles.textLG}>Photos</Text>
+            {photos.map((photo, index) => (
               <View key={index} style={{borderBottomColor: '#3D316F', borderBottomWidth: 1, marginVertical: 10}}>
-                <Text style={styles.textMD}>Name:</Text>
-                <Text style={styles.textSM}>{comment.name}</Text>
-                <Text style={styles.textMD}>Email:</Text>
-                <Text style={styles.textSM}>{comment.email}</Text>
-                <Text style={styles.textMD}>Body:</Text>
-                <Text style={styles.textSM}>{comment.body}</Text>
+                <Text style={styles.textMD}>Title:</Text>
+                <Text style={styles.textSM}>{photo.title}</Text>
               </View>
             ))}
           </View>
@@ -59,8 +54,8 @@ const PostScreen = (props) => {
     </SafeAreaView>
   );
 };
-PostScreen.navigationOptions = {
-  title: "Post Details",
+AlbumScreen.navigationOptions = {
+  title: "Album Detail",
 };
 const styles = StyleSheet.create({
   container: {
@@ -110,4 +105,4 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 });
-export default PostScreen;
+export default AlbumScreen;

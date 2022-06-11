@@ -8,6 +8,8 @@ import UsersHomeScreen from "./usersHome";
 import UserScreen from "./user";
 import PostsHomeScreen from './postsHome';
 import PostScreen from './post';
+import AlbumsHomeScreen from './albumsHome';
+import AlbumScreen from './album';
 
 const PostsStack = createStackNavigator();
 
@@ -31,6 +33,17 @@ function UsersStackScreen() {
   );
 }
 
+const AlbumsStack = createStackNavigator();
+
+function AlbumsStackScreen() {
+  return (
+    <AlbumsStack.Navigator>
+      <AlbumsStack.Screen name="Albums List" component={AlbumsHomeScreen} />
+      <AlbumsStack.Screen name="Album Detail" component={AlbumScreen} />
+    </AlbumsStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -44,6 +57,8 @@ export default function App() {
               iconName = "file";
             } else if (route.name === "Users") {
               iconName = "users";
+            } else if (route.name === "Album List") {
+              iconName = "photo";
             }
 
             return <FontAwesome name={iconName} size={size} color={color} />;
@@ -54,6 +69,7 @@ export default function App() {
       >
         <Tab.Screen name="Users" component={UsersStackScreen} options={{ headerShown: false }}  />
         <Tab.Screen name="Posts" component={PostsStackScreen} options={{ headerShown: false }}  />
+        <Tab.Screen name="Album List" component={AlbumsStackScreen} options={{ headerShown: false }}  />
       </Tab.Navigator>
     </NavigationContainer>
   );
