@@ -1,25 +1,41 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, FlatList, SafeAreaView, ScrollView } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import axios from "axios";
+
 const PostScreen = (props) => {
   const id = props.route.params.id;
   const [isLoading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
   getPost = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + id)
-      .then((response) => response.json())
-      .then((json) => {
-        setPost(json);
+    // fetch("https://jsonplaceholder.typicode.com/posts/" + id)
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setPost(json);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts/" + id)
+      .then((response) => {
+        setPost(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
   getComments = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
-      .then((response) => response.json())
-      .then((json) => {
-        setComments(json);
+    // fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setComments(json);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
+      .then((response) => {
+        setComments(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
@@ -31,31 +47,38 @@ const PostScreen = (props) => {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <>
-          <View style={styles.viewStyle}>
-            <Text style={styles.textLG}>{post.title}</Text>
-            <Text style={styles.textSM}>Body: {post.body}</Text>
-          </View>
-          <View style={styles.viewStyle2}>
-            <Text style={styles.textLG}>Comments</Text>
-            {comments.map((comment, index) => (
-              <View key={index} style={{borderBottomColor: '#3D316F', borderBottomWidth: 1, marginVertical: 10}}>
-                <Text style={styles.textMD}>Name:</Text>
-                <Text style={styles.textSM}>{comment.name}</Text>
-                <Text style={styles.textMD}>Email:</Text>
-                <Text style={styles.textSM}>{comment.email}</Text>
-                <Text style={styles.textMD}>Body:</Text>
-                <Text style={styles.textSM}>{comment.body}</Text>
-              </View>
-            ))}
-          </View>
-        </>
-      )}
-    </ScrollView>
+      <ScrollView style={styles.scrollView}>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <>
+            <View style={styles.viewStyle}>
+              <Text style={styles.textLG}>{post.title}</Text>
+              <Text style={styles.textSM}>Body: {post.body}</Text>
+            </View>
+            <View style={styles.viewStyle2}>
+              <Text style={styles.textLG}>Comments</Text>
+              {comments.map((comment, index) => (
+                <View
+                  key={index}
+                  style={{
+                    borderBottomColor: "#3D316F",
+                    borderBottomWidth: 1,
+                    marginVertical: 10,
+                  }}
+                >
+                  <Text style={styles.textMD}>Name:</Text>
+                  <Text style={styles.textSM}>{comment.name}</Text>
+                  <Text style={styles.textMD}>Email:</Text>
+                  <Text style={styles.textSM}>{comment.email}</Text>
+                  <Text style={styles.textMD}>Body:</Text>
+                  <Text style={styles.textSM}>{comment.body}</Text>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -68,7 +91,7 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
   },
   scrollView: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     // marginHorizontal,
   },
   viewStyle: {

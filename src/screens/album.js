@@ -1,25 +1,41 @@
+import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, FlatList, SafeAreaView, ScrollView } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+
 const AlbumScreen = (props) => {
   const id = props.route.params.id;
   const [isLoading, setLoading] = useState(false);
   const [album, setAlbum] = useState([]);
   const [photos, setPhotos] = useState([]);
   getAlbum = () => {
-    fetch("https://jsonplaceholder.typicode.com/albums/" + id)
-      .then((response) => response.json())
-      .then((json) => {
-        setAlbum(json);
+    // fetch("https://jsonplaceholder.typicode.com/albums/" + id)
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setAlbum(json);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/albums/" + id)
+      .then((response) => {
+        setAlbum(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
   getPhotos = () => {
-    fetch("https://jsonplaceholder.typicode.com/albums/" + id + "/photos")
-      .then((response) => response.json())
-      .then((json) => {
-        setPhotos(json);
+    // fetch("https://jsonplaceholder.typicode.com/albums/" + id + "/photos")
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setPhotos(json);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/albums/" + id + "/photos")
+      .then((response) => {
+        setPhotos(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
@@ -31,26 +47,33 @@ const AlbumScreen = (props) => {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <>
-          <View style={styles.viewStyle}>
-            <Text style={styles.textLG}>{album.title}</Text>
-          </View>
-          <View style={styles.viewStyle2}>
-            <Text style={styles.textLG}>Photos</Text>
-            {photos.map((photo, index) => (
-              <View key={index} style={{borderBottomColor: '#3D316F', borderBottomWidth: 1, marginVertical: 10}}>
-                <Text style={styles.textMD}>Title:</Text>
-                <Text style={styles.textSM}>{photo.title}</Text>
-              </View>
-            ))}
-          </View>
-        </>
-      )}
-    </ScrollView>
+      <ScrollView style={styles.scrollView}>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <>
+            <View style={styles.viewStyle}>
+              <Text style={styles.textLG}>{album.title}</Text>
+            </View>
+            <View style={styles.viewStyle2}>
+              <Text style={styles.textLG}>Photos</Text>
+              {photos.map((photo, index) => (
+                <View
+                  key={index}
+                  style={{
+                    borderBottomColor: "#3D316F",
+                    borderBottomWidth: 1,
+                    marginVertical: 10,
+                  }}
+                >
+                  <Text style={styles.textMD}>Title:</Text>
+                  <Text style={styles.textSM}>{photo.title}</Text>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -63,7 +86,7 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
   },
   scrollView: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     // marginHorizontal,
   },
   viewStyle: {

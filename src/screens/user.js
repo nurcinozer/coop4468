@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import axios from "axios";
+
 const UserScreen = (props) => {
   const id = props.route.params.id;
   const [isLoading, setLoading] = useState(false);
@@ -9,25 +11,39 @@ const UserScreen = (props) => {
   const [userCompany, setUserCompany] = useState([]);
   const [todos, setTodos] = useState([]);
   getUser = () => {
-    fetch("https://jsonplaceholder.typicode.com/users/" + id)
-      .then((response) => response.json())
-      .then((json) => {
-        setUser(json);
-        console.log(json);
-        setUserAddress(json.address);
-        setUserCompany(json.company);
+    // fetch("https://jsonplaceholder.typicode.com/users/" + id)
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setUser(json);
+    //     console.log(json);
+    //     setUserAddress(json.address);
+    //     setUserCompany(json.company);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/users/" + id)
+      .then((response) => {
+        setUser(response.data);
+        setUserAddress(response.data.address);
+        setUserCompany(response.data.company);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   };
   getTodos = () => {
-    fetch("https://jsonplaceholder.typicode.com/users/" + id + "/todos")
-      .then((response) => response.json())
-      .then((json) => {
-        setTodos(json);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+    // fetch("https://jsonplaceholder.typicode.com/users/" + id + "/todos")
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setTodos(json);
+    //   })
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+    axios
+      .get("https://jsonplaceholder.typicode.com/users/" + id + "/todos")
+      .then((response) => {
+        setTodos(response.data);
+      });
   };
   useEffect(() => {
     setLoading(true);
