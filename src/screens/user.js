@@ -1,7 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import axios from "axios";
+import {
+  Box,
+  Heading,
+  AspectRatio,
+  Image,
+  Text as TextNative,
+  Center,
+  HStack,
+  Stack,
+} from "native-base";
 
 const UserScreen = (props) => {
   const id = props.route.params.id;
@@ -57,7 +67,115 @@ const UserScreen = (props) => {
           <Text>Loading...</Text>
         ) : (
           <>
-            <View style={styles.viewStyle}>
+            <Box alignItems="center" margin={3}>
+              <Box
+                width="full"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Box>
+                  <AspectRatio w="100%" ratio={16 / 9}>
+                    <Image
+                      source={{
+                        uri: "https://images.unsplash.com/photo-1454923634634-bd1614719a7b",
+                      }}
+                      alt="image"
+                    />
+                  </AspectRatio>
+                  <Center
+                    bg="violet.500"
+                    _dark={{
+                      bg: "violet.400",
+                    }}
+                    _text={{
+                      color: "warmGray.50",
+                      fontWeight: "700",
+                      fontSize: "xs",
+                    }}
+                    position="absolute"
+                    bottom="0"
+                    px="3"
+                    py="1.5"
+                  >
+                    User Detail
+                  </Center>
+                </Box>
+                <Stack p="4" space={3}>
+                  <Stack space={2}>
+                    <Heading size="md" ml="-1">
+                      {user.name}
+                    </Heading>
+                    <TextNative
+                      fontSize="xs"
+                      _light={{
+                        color: "violet.500",
+                      }}
+                      _dark={{
+                        color: "violet.400",
+                      }}
+                      fontWeight="500"
+                      ml="-0.5"
+                      mt="-1"
+                    >
+                      {user.email}
+                    </TextNative>
+                  </Stack>
+                  <TextNative fontWeight="400">
+                    {userAddress.street}, {userAddress.suite},{" "}
+                    {userAddress.city}, {userAddress.zipcode}
+                  </TextNative>
+                  <HStack alignItems="flex-start" flexDirection="column">
+                    <HStack alignItems="center">
+                      <TextNative
+                        color="coolGray.600"
+                        _dark={{
+                          color: "warmGray.200",
+                        }}
+                        fontWeight="400"
+                      >
+                        Phone: {user.phone}
+                      </TextNative>
+                    </HStack>
+                    <HStack alignItems="center">
+                      <TextNative
+                        color="coolGray.600"
+                        _dark={{
+                          color: "warmGray.200",
+                        }}
+                        fontWeight="400"
+                      >
+                        Website: {user.website}
+                      </TextNative>
+                    </HStack>
+                    <HStack alignItems="center">
+                      <TextNative
+                        color="coolGray.600"
+                        _dark={{
+                          color: "warmGray.200",
+                        }}
+                        fontWeight="400"
+                      >
+                        Company: {userCompany.name}
+                      </TextNative>
+                    </HStack>
+                  </HStack>
+                </Stack>
+              </Box>
+            </Box>
+            {/* <View style={styles.viewStyle}>
               <Text style={styles.textLG}>{user.name}</Text>
               <Text style={styles.textSM}>Phone: {user.phone}</Text>
               <Text style={styles.textSM}>Website: {user.website}</Text>
@@ -67,8 +185,71 @@ const UserScreen = (props) => {
               <Text style={styles.textSM}>
                 {userAddress.city}, {userAddress.zipcode}
               </Text>
-            </View>
-            <View style={styles.viewStyle2}>
+            </View> */}
+            <Box alignItems="center" margin={3}>
+              <Box
+                width="full"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Stack p="4" space={3}>
+                  <Stack space={2}>
+                    <Heading size="md" ml="-1">
+                      Todo List of {user.name}
+                    </Heading>
+                  </Stack>
+                  {todos.map((todo) => (
+                    <HStack alignItems="flex-start" flexDirection="column">
+                      <HStack alignItems="center">
+                        <TextNative
+                          color="coolGray.600"
+                          _dark={{
+                            color: "warmGray.200",
+                          }}
+                          fontWeight="400"
+                        >
+                          Title: {todo.title}
+                        </TextNative>
+                      </HStack>
+                      <HStack alignItems="center">
+                      <TextNative
+                          color="coolGray.600"
+                          _dark={{
+                            color: "warmGray.200",
+                          }}
+                          fontWeight="400"
+                        >
+                          Completed:
+                        </TextNative>
+                        <TextNative
+                          color={todo.completed.toString() === "true" ? "green.500" : "red.500"}
+                          _dark={{
+                            color: "warmGray.200",
+                          }}
+                          fontWeight="400"
+                        >
+                          {""} {todo.completed.toString()}
+                        </TextNative>
+                      </HStack>
+                    </HStack>
+                  ))}
+                </Stack>
+              </Box>
+            </Box>
+            {/* <View style={styles.viewStyle2}>
               <Text style={styles.textLG}>Todos</Text>
               {todos.map((todo, index) => (
                 <View
@@ -85,7 +266,7 @@ const UserScreen = (props) => {
                   <Text style={styles.textSM}>{todo.completed.toString()}</Text>
                 </View>
               ))}
-            </View>
+            </View> */}
           </>
         )}
       </ScrollView>

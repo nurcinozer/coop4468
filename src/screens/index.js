@@ -62,7 +62,10 @@ export default function App() {
 
             return <FontAwesome name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "tomato",
+          tabBarStyle: {
+            height: 90
+          },
+          tabBarActiveTintColor: "#A78BFA",
           tabBarInactiveTintColor: "gray",
         })}
       >
