@@ -211,8 +211,8 @@ const UserScreen = (props) => {
                       Todo List of {user.name}
                     </Heading>
                   </Stack>
-                  {todos.map((todo) => (
-                    <HStack alignItems="flex-start" flexDirection="column">
+                  {todos.map((todo, index) => (
+                    <HStack alignItems="flex-start" flexDirection="column" key={index}>
                       <HStack alignItems="center">
                         <TextNative
                           color="coolGray.600"

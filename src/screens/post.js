@@ -180,8 +180,8 @@ const PostScreen = (props) => {
                       Comments of {post.title}
                     </Heading>
                   </Stack>
-                  {comments.map((comment) => (
-                    <HStack alignItems="flex-start" flexDirection="column" borderBottomColor="coolGray.200" borderBottomWidth="1" paddingBottom={3}>
+                  {comments.map((comment, index) => (
+                    <HStack key={index} alignItems="flex-start" flexDirection="column" borderBottomColor="coolGray.200" borderBottomWidth="1" paddingBottom={3}>
                       <HStack alignItems="center">
                         <TextNative
                           color="coolGray.600"

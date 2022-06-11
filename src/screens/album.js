@@ -108,8 +108,9 @@ const AlbumScreen = (props) => {
               </Box>
             </Box>
             <Box alignItems="center" marginX={3}>
-              {photos.map((photo) => (
+              {photos.map((photo, index) => (
                 <Box
+                  key={index}
                   margin={3}
                   width="full"
                   rounded="lg"
